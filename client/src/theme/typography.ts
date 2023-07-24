@@ -22,22 +22,15 @@ export function responsiveFontSizes({ sm, md, lg }: { sm: number; md: number; lg
   };
 }
 
-declare module '@mui/material/styles' {
-  interface TypographyVariants {
-    fontWeightSemiBold: React.CSSProperties['fontWeight'];
-  }
-}
-
-const primaryFont = 'Public Sans, sans-serif'; // Google Font
-// const secondaryFont = 'CircularStd, sans-serif'; // Local Font
-
 // ----------------------------------------------------------------------
 
-export const typography = {
-  fontFamily: primaryFont,
+const FONT_PRIMARY = 'Public Sans, sans-serif'; // Google Font
+// const FONT_SECONDARY = 'CircularStd, sans-serif'; // Local Font
+
+const typography = {
+  fontFamily: FONT_PRIMARY,
   fontWeightRegular: 400,
-  fontWeightMedium: 500,
-  fontWeightSemiBold: 600,
+  fontWeightMedium: 600,
   fontWeightBold: 700,
   h1: {
     fontWeight: 800,
@@ -107,6 +100,8 @@ export const typography = {
     fontWeight: 700,
     lineHeight: 24 / 14,
     fontSize: pxToRem(14),
-    textTransform: 'unset',
+    textTransform: 'capitalize',
   },
 } as const;
+
+export default typography;

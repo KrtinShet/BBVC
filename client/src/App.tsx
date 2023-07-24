@@ -1,52 +1,28 @@
-// scroll bar
-import 'simplebar-react/dist/simplebar.min.css';
+import React from "react";
 
-// lazy image
-import 'react-lazy-load-image-component/src/effects/blur.css';
+import { RouterProvider } from "react-router-dom";
+import router from "./routes";
 
-// ----------------------------------------------------------------------
+import ThemeProvider from "./theme";
+import { ThemeContextProvider } from "./theme/ThemeContext";
+import { MotionContainer } from "./Components/animate";
+import SnackbarProvider from "./Components/snackbar";
+import { PasswordProvider } from "./context/passwordContext";
 
-// routes
-import Router from 'src/routes/sections';
-// theme
-import ThemeProvider from 'src/theme';
-// hooks
-import { useScrollToTop } from 'src/hooks/use-scroll-to-top';
-// components
-import ProgressBar from 'src/components/progress-bar';
-import MotionLazy from 'src/components/animate/motion-lazy';
-import { SettingsProvider, SettingsDrawer } from 'src/components/settings';
-// auth
-import { AuthProvider, AuthConsumer } from 'src/auth/context/jwt';
-
-// ----------------------------------------------------------------------
-
-export default function App() {
-
-  useScrollToTop();
-
+const Onboard: React.FC<{}> = () => {
   return (
-    <AuthProvider>
-      <SettingsProvider
-        defaultSettings={{
-          themeMode: 'light', // 'light' | 'dark'
-          themeDirection: 'ltr', //  'rtl' | 'ltr'
-          themeContrast: 'default', // 'default' | 'bold'
-          themeLayout: 'vertical', // 'vertical' | 'horizontal' | 'mini'
-          themeColorPresets: 'default', // 'default' | 'cyan' | 'purple' | 'blue' | 'orange' | 'red'
-          themeStretch: false,
-        }}
-      >
-        <ThemeProvider>
-          <MotionLazy>
-            <SettingsDrawer />
-            <ProgressBar />
-            <AuthConsumer>
-              <Router />
-            </AuthConsumer>
-          </MotionLazy>
-        </ThemeProvider>
-      </SettingsProvider>
-    </AuthProvider>
+    <ThemeContextProvider>
+      <ThemeProvider>
+        <MotionContainer>
+          <SnackbarProvider>
+            <PasswordProvider>
+              <RouterProvider router={router} />
+            </PasswordProvider>
+          </SnackbarProvider>
+        </MotionContainer>
+      </ThemeProvider>
+    </ThemeContextProvider>
   );
-}
+};
+
+export default Onboard;
