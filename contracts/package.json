@@ -9,5 +9,9 @@
   "devDependencies": {
     "@nomicfoundation/hardhat-ethers": "^3.0.4",
     "ethers": "^6.6.3"
+  },
+  "scripts": {
+    "build": "hardhat compile",
+    "test": "hardhat test"
   }
 }

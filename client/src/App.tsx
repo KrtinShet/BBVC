@@ -8,15 +8,18 @@ import { ThemeContextProvider } from "./theme/ThemeContext";
 import { MotionContainer } from "./Components/animate";
 import SnackbarProvider from "./Components/snackbar";
 import { PasswordProvider } from "./context/passwordContext";
+import Web3Provider from './ethereum/index'
 
-const Onboard: React.FC<{}> = () => {
+const App: React.FC<{}> = () => {
   return (
     <ThemeContextProvider>
       <ThemeProvider>
         <MotionContainer>
           <SnackbarProvider>
             <PasswordProvider>
-              <RouterProvider router={router} />
+              <Web3Provider>
+                <RouterProvider router={router} />
+              </Web3Provider>
             </PasswordProvider>
           </SnackbarProvider>
         </MotionContainer>
@@ -25,4 +28,4 @@ const Onboard: React.FC<{}> = () => {
   );
 };
 
-export default Onboard;
+export default App;
