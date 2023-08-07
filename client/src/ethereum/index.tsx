@@ -14,9 +14,9 @@ const {
   chains,
 } = configureChains(
   [
-    sepolia,
+    // sepolia,
     // polygonMumbai,
-    // localhost,
+    localhost,
     // hardhat
   ],
   [publicProvider()]

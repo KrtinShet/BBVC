@@ -1,4 +1,4 @@
-import { Box, Container, Button, TextField, Typography } from '@mui/material';
+import { Box, Container, TextField, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import {
   Hash,
@@ -7,6 +7,7 @@ import {
 
 import Header from '../../Components/Header';
 import { useAccount, useWalletClient, usePublicClient } from 'wagmi';
+import { LoadingButton } from '@mui/lab';
 
 
 
@@ -18,6 +19,7 @@ const getContractJson = async () => {
 
 
 const NewContract: React.FC<{}> = () => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [name, setName] = useState<string | null>();
   const [symbol, setSymbol] = useState<string | null>();
   const [hash, setHash] = useState<Hash>();
@@ -29,6 +31,7 @@ const NewContract: React.FC<{}> = () => {
 
 
   const _dplyContract = async () => {
+    setIsLoading(true);
     const contractJson = await getContractJson();
     const _hash = await walletClient?.deployContract({
       abi: contractJson.abi,
@@ -46,6 +49,7 @@ const NewContract: React.FC<{}> = () => {
       if (hash) {
         const receipt = await publicClient.waitForTransactionReceipt({ hash })
         setReceipt(receipt)
+        setIsLoading(false)
       }
     })()
   }, [hash])
@@ -55,8 +59,8 @@ const NewContract: React.FC<{}> = () => {
     <Box>
       <Header title="New Contract" />
       <Container>
-        <Typography variant="h1">Deploy a new Certificate Contract!!</Typography>
-        <Box display={"flex"} flexDirection={"column"} maxWidth={"500px"} justifyContent={"space-between"}>
+        <Typography variant="h1" mt={5}>Deploy a new Certificate Contract!!</Typography>
+        <Box display={"flex"} flexDirection={"column"} maxWidth={"500px"} justifyContent={"space-between"} mt={3}>
           <TextField
             label="Contract Name"
             variant="outlined"
@@ -73,13 +77,14 @@ const NewContract: React.FC<{}> = () => {
             value={symbol}
             onChange={e => setSymbol(e.target.value)}
           />
-          <Button
+          <LoadingButton
+            loading={isLoading}
             variant='contained'
             onClick={_dplyContract}
-            disabled={!address || !name || !symbol}
+            disabled={!address || !name || !symbol || isLoading}
           >
             Deploy Contract
-          </Button>
+          </LoadingButton>
         </Box>
         <Box>
           <h2>Transaction Hash: {hash?.toString()}</h2>
