@@ -3,6 +3,9 @@ import pinataSDK from '@pinata/sdk';
 import multer from 'multer';
 import { Readable } from 'stream';
 import cors from 'cors';
+import dotenv from 'dotenv'
+
+dotenv.config();
 
 const storage = multer.memoryStorage()
 const upload = multer({ dest: 'uploads/', storage })
